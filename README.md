@@ -4,6 +4,12 @@ A timed score board.
 
 
 
+## Demo:
+
+Demo/unit tests: <a href="http://crisstanza.github.io/TimedScore/" target="_blank"><b>crisstanza.github.io/TimedScore</b></a>.
+
+
+
 ### Sync gh-pages
 
 ```
