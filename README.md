@@ -13,7 +13,7 @@ Demo/unit tests: <a href="http://crisstanza.github.io/TimedScore/" target="_blan
 ### Sync gh-pages
 
 ```
-git push --force master:gh-pages
+git push --force origin master:gh-pages
 ```
 
 
