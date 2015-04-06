@@ -14,6 +14,8 @@ Demo/unit tests: <a href="http://crisstanza.github.io/TimedScore/" target="_blan
 
 ```
 git push --force origin master:gh-pages
+git reset --hard origin/gh-pages
+
 ```
 
 
