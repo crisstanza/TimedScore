@@ -2,3 +2,6 @@ pre {
 	font-family: Courier;
 	font-size: 10pt;
 }
+
+span.success { color: green; }
+span.error { color: red; }
