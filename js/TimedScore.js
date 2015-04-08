@@ -29,7 +29,7 @@ var TimedScore = function(idTime, idTotal1, idTotal2) {
 	}
 
 	function getHTML(id) {
-		return id ? document.getElementById(this.idTime).innerHTML : undefined;
+		return id ? document.getElementById(id).innerHTML : undefined;
 	}
 
 	TimedScore.dec2 = function(n) {
