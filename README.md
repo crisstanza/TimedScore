@@ -1,4 +1,4 @@
-# TimedScore Vs. 1.1.1.
+# TimedScore Vs. 1.1.2.
 
 A timed score board.
 

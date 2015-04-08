@@ -1,5 +1,5 @@
 /***************************************************************
- *************** LIBRARY: Timed Score Vs. 1.1.1 ****************
+ *************** LIBRARY: Timed Score Vs. 1.1.2 ****************
  ***************************************************************/
 
 var TimedScore = function(idTime, idTotal1, idTotal2) {
@@ -20,10 +20,10 @@ var TimedScore = function(idTime, idTotal1, idTotal2) {
 
 	function setHTML(id, value) {
 		if (id) {
-			if (value) {
-				document.getElementById(id).innerHTML = value;
-			} else {
+			if (value == undefined) {
 				document.getElementById(id).innerHTML++;
+			} else {
+				document.getElementById(id).innerHTML = value;
 			}
 		}
 	}
