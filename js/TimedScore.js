@@ -1,5 +1,5 @@
 /***************************************************************
- *************** LIBRARY: Timed Score Vs. 1.1.0 ****************
+ *************** LIBRARY: Timed Score Vs. 1.1.1 ****************
  ***************************************************************/
 
 var TimedScore = function(idTime, idTotal1, idTotal2) {
@@ -17,6 +17,20 @@ var TimedScore = function(idTime, idTotal1, idTotal2) {
 	var DELAY = 500;
 	var SEP = ':';
 	var DEFAULT_TIME = '00:00';
+
+	function setHTML(id, value) {
+		if (id) {
+			if (value) {
+				document.getElementById(id).innerHTML = value;
+			} else {
+				document.getElementById(id).innerHTML++;
+			}
+		}
+	}
+
+	function getHTML(id) {
+		return id ? document.getElementById(this.idTime).innerHTML : undefined;
+	}
 
 	TimedScore.dec2 = function(n) {
 		n = Math.floor(n);
@@ -37,16 +51,10 @@ var TimedScore = function(idTime, idTotal1, idTotal2) {
 	};
 
 	TimedScore.prototype.reset = function() {
-		if (this.idTotal1) {
-			document.getElementById(this.idTotal1).innerHTML = 0;
-		}
-		if (this.idTotal2) {
-			document.getElementById(this.idTotal2).innerHTML = 0;
-		}
+		setHTML(this.idTotal1, 0);
+		setHTML(this.idTotal2, 0);
 		this.time = new Date().getTime();
-		if (this.idTime) {
-			document.getElementById(this.idTime).innerHTML = this.getTime();
-		}
+		setHTML(this.idTime, this.getTime());
 	};
 
 	TimedScore.prototype.start = function() {
@@ -56,10 +64,8 @@ var TimedScore = function(idTime, idTotal1, idTotal2) {
 	};
 
 	TimedScore.prototype.loop = function() {
-		if (this.idTime) {
-			document.getElementById(this.idTime).innerHTML = this.getTime();
-			this.checkLimit();
-		}
+		setHTML(this.idTime, this.getTime());
+		this.checkLimit();
 	};
 
 	TimedScore.prototype.checkLimit = function() {
@@ -69,25 +75,18 @@ var TimedScore = function(idTime, idTotal1, idTotal2) {
 			if (seconds >= this.limit) {
 				this.stop();
 				if (this.limitCallback) {
-					var time = this.idTime ? document.getElementById(this.idTime).innerHTML : undefined;
-					var total1 = this.idTotal1 ? document.getElementById(this.idTotal1).innerHTML : undefined;
-					var total2 = this.idTotal2 ? document.getElementById(this.idTotal2).innerHTML : undefined;
-					this.limitCallback(time, total1, total2);
+					this.limitCallback(getHTML(this.idTime), getHTML(this.idTotal1), getHTML(this.idTotal2));
 				}
 			}
 		}
 	};
 
 	TimedScore.prototype.add1 = function() {
-		if (this.idTotal1) {
-			document.getElementById(this.idTotal1).innerHTML++;
-		}
+		setHTML(this.idTotal1);
 	};
 
 	TimedScore.prototype.add2 = function() {
-		if (this.idTotal2) {
-			document.getElementById(this.idTotal2).innerHTML++;
-		}
+		setHTML(this.idTotal2);
 	};
 
 	TimedScore.prototype.stop = function() {
@@ -115,4 +114,3 @@ var TimedScore = function(idTime, idTotal1, idTotal2) {
 
 /********************************************************************************************************
  ********************************************************************************************************/
- 
