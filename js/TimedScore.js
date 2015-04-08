@@ -1,5 +1,5 @@
 /***************************************************************
- *************** LIBRARY: Timed Score Vs. 1.0.1 ****************
+ *************** LIBRARY: Timed Score Vs. 1.1.0 ****************
  ***************************************************************/
 
 var TimedScore = function(idTime, idTotal1, idTotal2) {
@@ -8,6 +8,8 @@ var TimedScore = function(idTime, idTotal1, idTotal2) {
 	this.idTotal2 = idTotal2;
 	this.time = undefined;
 	this.timer = undefined;
+	this.limit = undefined;
+	this.limitCallback = undefined;
 };
 
 (function() {
@@ -34,7 +36,7 @@ var TimedScore = function(idTime, idTotal1, idTotal2) {
 		}
 	};
 
-	TimedScore.prototype.start = function() {
+	TimedScore.prototype.reset = function() {
 		if (this.idTotal1) {
 			document.getElementById(this.idTotal1).innerHTML = 0;
 		}
@@ -42,6 +44,13 @@ var TimedScore = function(idTime, idTotal1, idTotal2) {
 			document.getElementById(this.idTotal2).innerHTML = 0;
 		}
 		this.time = new Date().getTime();
+		if (this.idTime) {
+			document.getElementById(this.idTime).innerHTML = this.getTime();
+		}
+	};
+
+	TimedScore.prototype.start = function() {
+		this.reset();
 		var _this = this;
 		this.timer = setInterval(function() { _this.loop() }, DELAY);
 	};
@@ -49,6 +58,23 @@ var TimedScore = function(idTime, idTotal1, idTotal2) {
 	TimedScore.prototype.loop = function() {
 		if (this.idTime) {
 			document.getElementById(this.idTime).innerHTML = this.getTime();
+			this.checkLimit();
+		}
+	};
+
+	TimedScore.prototype.checkLimit = function() {
+		var now = new Date().getTime();
+		var seconds = Math.floor((now - this.time) / 1000);
+		if (this.limit) {
+			if (seconds >= this.limit) {
+				this.stop();
+				if (this.limitCallback) {
+					var time = this.idTime ? document.getElementById(this.idTime).innerHTML : undefined;
+					var total1 = this.idTotal1 ? document.getElementById(this.idTotal1).innerHTML : undefined;
+					var total2 = this.idTotal2 ? document.getElementById(this.idTotal2).innerHTML : undefined;
+					this.limitCallback(time, total1, total2);
+				}
+			}
 		}
 	};
 
@@ -68,6 +94,11 @@ var TimedScore = function(idTime, idTotal1, idTotal2) {
 		if (this.timer) {
 			clearInterval(this.timer);
 		}
+	};
+
+	TimedScore.prototype.setLimit = function(limit, limitCallback) {
+		this.limit = limit;
+		this.limitCallback = limitCallback;
 	};
 
 	TimedScore.prototype.getTime = function() {
